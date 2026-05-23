@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:ns1="modeler" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:ns0="xmlns" id="bpmn_copilot_Definition_id" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="8cca9cf" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0" ns0:modeler="http://camunda.org/schema/modeler/1.0" ns1:executionPlatform="Camunda Cloud" ns1:executionPlatformVersion="8.6">
+  <bpmn:collaboration id="Collaboration_09zdpse" isClosed="false">
+    <bpmn:participant id="Participant_1o9p8sq" name="AI Inventory Assistant" />
+  </bpmn:collaboration>
+  <bpmn:collaboration id="Collaboration_11x40la">
+    <bpmn:participant id="Participant_1thltl7" name="AI Inventory Assistant" processRef="Process_10xsyvo" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_10xsyvo" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_0v4eb8z">
+      <bpmn:lane id="Lane_06ax1k9" name="Procurement Officer">
+        <bpmn:flowNodeRef>Task_10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1mfcmhx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_7</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0de5spo" name="Financial Manager">
+        <bpmn:flowNodeRef>Task_8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_10273n6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_04utawc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0rhvp4o</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0q9f7z1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:serviceTask id="Task_8" name="Identify High Profit Items that are at risk (REQ-INV-8)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1tp5mcw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0oej1or</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_10" name="Predict Stockouts (REQ-INV-10)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03lglak</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qn2t9i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_9" name="Highlight Low-Profit Items (REQ-INV-9)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0oej1or</bpmn:incoming>
+      <bpmn:outgoing>Flow_12hyz69</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_10273n6" name="Approve Final Inventory Plan" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12hyz69</bpmn:incoming>
+      <bpmn:outgoing>Flow_03lglak</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_1" name="End">
+      <bpmn:incoming>Flow_0qn2t9i</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_4" name="Suggest Cheapest Reorder Timing (REQ-INV-4)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03zdmx3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ijfao6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_5" name="Calculate Minimum Stock Needed (REQ-INV-5)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ijfao6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y4z38v</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_6" name="Suggests Transfers Between Branches (REQ-INV-6)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1y4z38v</bpmn:incoming>
+      <bpmn:outgoing>Flow_08zb4rn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_1mfcmhx" name="Review Reorder Options" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08zb4rn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wx2mn5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_7" name="Score Supplier Performance   (REQ-INV-7)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wx2mn5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tp5mcw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_04utawc" name="Confirm Items to Reorder" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0pufqek</bpmn:incoming>
+      <bpmn:outgoing>Flow_03zdmx3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_3" name="Detect Expiring Items (REQ-INV-3)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1sq6l87</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pufqek</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_0rhvp4o" name="Adjust Forecast Settings" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1nfdj6i</bpmn:incoming>
+      <bpmn:outgoing>Flow_1sq6l87</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_2" name="Forecast Inventory Costs (REQ-INV-1 &#38; 2)" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1lvi9gs</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nfdj6i</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_1" name="Collect Inventory and Cost Data" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="3" implementation="##WebService">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0cnqm1x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lvi9gs</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Activity_0q9f7z1" name="Set Monthly Inventory Targets" implementation="##unspecified">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ibwt1f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cnqm1x</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_0ibwt1f</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1tp5mcw" sourceRef="Task_7" targetRef="Task_8" />
+    <bpmn:sequenceFlow id="Flow_0oej1or" sourceRef="Task_8" targetRef="Task_9" />
+    <bpmn:sequenceFlow id="Flow_03lglak" sourceRef="Activity_10273n6" targetRef="Task_10" />
+    <bpmn:sequenceFlow id="Flow_0qn2t9i" sourceRef="Task_10" targetRef="EndEvent_1" />
+    <bpmn:sequenceFlow id="Flow_12hyz69" sourceRef="Task_9" targetRef="Activity_10273n6" />
+    <bpmn:sequenceFlow id="Flow_03zdmx3" sourceRef="Activity_04utawc" targetRef="Task_4" />
+    <bpmn:sequenceFlow id="Flow_0ijfao6" sourceRef="Task_4" targetRef="Task_5" />
+    <bpmn:sequenceFlow id="Flow_1y4z38v" sourceRef="Task_5" targetRef="Task_6" />
+    <bpmn:sequenceFlow id="Flow_08zb4rn" sourceRef="Task_6" targetRef="Activity_1mfcmhx" />
+    <bpmn:sequenceFlow id="Flow_0wx2mn5" sourceRef="Activity_1mfcmhx" targetRef="Task_7" />
+    <bpmn:sequenceFlow id="Flow_0pufqek" sourceRef="Task_3" targetRef="Activity_04utawc" />
+    <bpmn:sequenceFlow id="Flow_1sq6l87" sourceRef="Activity_0rhvp4o" targetRef="Task_3" />
+    <bpmn:sequenceFlow id="Flow_1nfdj6i" sourceRef="Task_2" targetRef="Activity_0rhvp4o" />
+    <bpmn:sequenceFlow id="Flow_1lvi9gs" sourceRef="Task_1" targetRef="Task_2" />
+    <bpmn:sequenceFlow id="Flow_0cnqm1x" sourceRef="Activity_0q9f7z1" targetRef="Task_1" />
+    <bpmn:sequenceFlow id="Flow_0ibwt1f" sourceRef="StartEvent_1" targetRef="Activity_0q9f7z1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_1ljuegq">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1ljuegq" bpmnElement="Collaboration_11x40la">
+      <bpmndi:BPMNShape id="Participant_1thltl7_di" bpmnElement="Participant_1thltl7" isHorizontal="true">
+        <dc:Bounds x="152" y="80" width="628" height="1260" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_06ax1k9_di" bpmnElement="Lane_06ax1k9" isHorizontal="true">
+        <dc:Bounds x="182" y="790" width="598" height="550" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0de5spo_di" bpmnElement="Lane_0de5spo" isHorizontal="true">
+        <dc:Bounds x="182" y="80" width="598" height="710" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_8_di" bpmnElement="Task_8">
+        <dc:Bounds x="627" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_10_di" bpmnElement="Task_10">
+        <dc:Bounds x="627" y="870" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_9_di" bpmnElement="Task_9">
+        <dc:Bounds x="627" y="390" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0bwlvf4" bpmnElement="Activity_10273n6">
+        <dc:Bounds x="627" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="659" y="1012" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="667" y="1048" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_4_di" bpmnElement="Task_4">
+        <dc:Bounds x="257" y="817" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_5_di" bpmnElement="Task_5">
+        <dc:Bounds x="257" y="925" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_6_di" bpmnElement="Task_6">
+        <dc:Bounds x="257" y="1027" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_08k6nq0" bpmnElement="Activity_1mfcmhx">
+        <dc:Bounds x="257" y="1138" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_7_di" bpmnElement="Task_7">
+        <dc:Bounds x="257" y="1239" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0tmr5jc" bpmnElement="Activity_04utawc">
+        <dc:Bounds x="257" y="694" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <dc:Bounds x="257" y="586" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_01ykb1l" bpmnElement="Activity_0rhvp4o">
+        <dc:Bounds x="257" y="483" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <dc:Bounds x="257" y="376" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <dc:Bounds x="257" y="271" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q9f7z1_di" bpmnElement="Activity_0q9f7z1">
+        <dc:Bounds x="257" y="172" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="289" y="111" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="295" y="87" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1tp5mcw_di" bpmnElement="Flow_1tp5mcw">
+        <di:waypoint x="357" y="1279" />
+        <di:waypoint x="547" y="1279" />
+        <di:waypoint x="547" y="300" />
+        <di:waypoint x="627" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oej1or_di" bpmnElement="Flow_0oej1or">
+        <di:waypoint x="677" y="340" />
+        <di:waypoint x="677" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03lglak_di" bpmnElement="Flow_03lglak">
+        <di:waypoint x="677" y="610" />
+        <di:waypoint x="677" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qn2t9i_di" bpmnElement="Flow_0qn2t9i">
+        <di:waypoint x="677" y="950" />
+        <di:waypoint x="677" y="1012" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12hyz69_di" bpmnElement="Flow_12hyz69">
+        <di:waypoint x="677" y="470" />
+        <di:waypoint x="677" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03zdmx3_di" bpmnElement="Flow_03zdmx3">
+        <di:waypoint x="307" y="774" />
+        <di:waypoint x="307" y="817" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ijfao6_di" bpmnElement="Flow_0ijfao6">
+        <di:waypoint x="307" y="897" />
+        <di:waypoint x="307" y="925" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y4z38v_di" bpmnElement="Flow_1y4z38v">
+        <di:waypoint x="307" y="1005" />
+        <di:waypoint x="307" y="1027" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08zb4rn_di" bpmnElement="Flow_08zb4rn">
+        <di:waypoint x="307" y="1107" />
+        <di:waypoint x="307" y="1138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wx2mn5_di" bpmnElement="Flow_0wx2mn5">
+        <di:waypoint x="307" y="1218" />
+        <di:waypoint x="307" y="1239" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pufqek_di" bpmnElement="Flow_0pufqek">
+        <di:waypoint x="307" y="666" />
+        <di:waypoint x="307" y="694" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sq6l87_di" bpmnElement="Flow_1sq6l87">
+        <di:waypoint x="307" y="563" />
+        <di:waypoint x="307" y="586" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nfdj6i_di" bpmnElement="Flow_1nfdj6i">
+        <di:waypoint x="307" y="456" />
+        <di:waypoint x="307" y="483" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lvi9gs_di" bpmnElement="Flow_1lvi9gs">
+        <di:waypoint x="307" y="351" />
+        <di:waypoint x="307" y="376" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cnqm1x_di" bpmnElement="Flow_0cnqm1x">
+        <di:waypoint x="307" y="252" />
+        <di:waypoint x="307" y="271" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ibwt1f_di" bpmnElement="Flow_0ibwt1f">
+        <di:waypoint x="307" y="147" />
+        <di:waypoint x="307" y="172" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
